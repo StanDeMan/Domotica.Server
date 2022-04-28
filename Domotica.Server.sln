@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domotica.Server", "Domotica.Server\Domotica.Server.csproj", "{610BC25F-0052-4861-8393-C377503251B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase", "DataStore\DataBase.csproj", "{6EF17D5D-ABB0-497D-AAE4-6FEC8D18FABB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hardware", "Hardware\Hardware.csproj", "{1089B7DB-E3A9-4559-8268-6CE469EE197F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalClient", "SignalClient\SignalClient.csproj", "{5017910B-943D-4FDC-85BA-D83D0FE292D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{610BC25F-0052-4861-8393-C377503251B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{610BC25F-0052-4861-8393-C377503251B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{610BC25F-0052-4861-8393-C377503251B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{610BC25F-0052-4861-8393-C377503251B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF17D5D-ABB0-497D-AAE4-6FEC8D18FABB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF17D5D-ABB0-497D-AAE4-6FEC8D18FABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF17D5D-ABB0-497D-AAE4-6FEC8D18FABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF17D5D-ABB0-497D-AAE4-6FEC8D18FABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1089B7DB-E3A9-4559-8268-6CE469EE197F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1089B7DB-E3A9-4559-8268-6CE469EE197F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1089B7DB-E3A9-4559-8268-6CE469EE197F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1089B7DB-E3A9-4559-8268-6CE469EE197F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5017910B-943D-4FDC-85BA-D83D0FE292D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5017910B-943D-4FDC-85BA-D83D0FE292D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5017910B-943D-4FDC-85BA-D83D0FE292D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5017910B-943D-4FDC-85BA-D83D0FE292D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A6075BE2-4288-45D2-B0D4-380C1AC995D7}
+	EndGlobalSection
+EndGlobal
