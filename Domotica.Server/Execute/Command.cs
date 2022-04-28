@@ -10,7 +10,7 @@ namespace Domotica.Server.Execute
 {
     public sealed class Command
     {
-        private static ImportAssembly? _imported;
+        private static ImportAssembly _imported;
         private static readonly StreamWriter Writer;
 
         /// <summary>
@@ -46,13 +46,13 @@ namespace Domotica.Server.Execute
         /// </summary>
         /// <param name="cmdParams">Command parameter part</param>
         /// <returns>True: if went ok</returns>
-        private static object? RunExternal(dynamic? cmdParams)
+        private static object RunExternal(dynamic cmdParams)
         {
-            object? ret;
+            object ret;
 
             try
             {
-                _imported ??= ImportAssembly(cmdParams);
+                _imported = ImportAssembly(cmdParams);
 
                 ret = (_imported.IsLoaded && !_imported.Method!.IsInitialized
                     ? _imported.Method?.Execute(
@@ -77,7 +77,7 @@ namespace Domotica.Server.Execute
         /// </summary>
         /// <param name="parameter">Command property</param>
         /// <returns>True: if went ok</returns>
-        private static bool RunInternal(dynamic? parameter)
+        private static bool RunInternal(dynamic parameter)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace Domotica.Server.Execute
         /// </summary>
         /// <param name="cmdParams">Dynamic deserialized from json</param>
         /// <returns>Parameter for method</returns>
-        private static object[] PrepareMethodParams(dynamic? cmdParams)
+        private static object[] PrepareMethodParams(dynamic cmdParams)
         {
             // object created from json: method execution parameters
             var param = new object[1];
@@ -115,13 +115,13 @@ namespace Domotica.Server.Execute
         /// </summary>
         /// <param name="cmdParams">Dynamic deserialized from json</param>
         /// <returns>Imported Assembly object</returns>
-        private static ImportAssembly ImportAssembly(dynamic? cmdParams) => new(
-                Convert.ToString(cmdParams?.External.Assembly),
-                Convert.ToString(cmdParams?.External.Class))
+        private static ImportAssembly ImportAssembly(dynamic cmdParams) => new(
+            Convert.ToString(cmdParams.External.Assembly),
+            Convert.ToString(cmdParams.External.Class))
         {
             Method =
             {
-                Name = Convert.ToString(cmdParams?.External.Method)
+                Name = Convert.ToString(cmdParams.External.Method)
             }
         };
 
@@ -131,7 +131,7 @@ namespace Domotica.Server.Execute
         /// <param name="cmd">Search here inside</param>
         /// <param name="name">Search for this property</param>
         /// <returns>True: if found</returns>
-        private static bool HasProperty(dynamic? cmd, string name)
+        private static bool HasProperty(dynamic cmd, string name)
         {
             return cmd is ExpandoObject
                 ? ((IDictionary<string, object>)cmd).ContainsKey(name)
@@ -144,9 +144,9 @@ namespace Domotica.Server.Execute
         /// <param name="json">Read from here</param>
         /// <param name="onlyParams">Take only parameter part for the search</param>
         /// <returns>Json tree part: Params ore complete</returns>
-        private static dynamic? ReadCmd(string json, bool onlyParams = true)
+        private static dynamic ReadCmd(string json, bool onlyParams = true)
         {
-            dynamic? cmd = JsonConvert.DeserializeObject<ExpandoObject>(json, new ExpandoObjectConverter());
+            dynamic cmd = JsonConvert.DeserializeObject<ExpandoObject>(json, new ExpandoObjectConverter());
 
             return onlyParams 
                 ? cmd?.Params 
