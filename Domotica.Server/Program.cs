@@ -1,5 +1,4 @@
 using Domotica.Server.Hubs;
-using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
