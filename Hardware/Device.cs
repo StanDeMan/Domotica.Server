@@ -133,7 +133,7 @@ namespace Hardware
         {
             for (var i = 0; i < Apa102?.Pixels.Length; i++)
             {
-                Apa102.Pixels[i] = Color.FromArgb(brightness, Color.R, Color.G, Color.B);
+                Apa102!.Pixels[i] = Color.FromArgb(brightness, Color.R, Color.G, Color.B);
             }
 
             Apa102?.Flush();
@@ -143,7 +143,7 @@ namespace Hardware
         {
             for (var i = 0; i < Apa102?.Pixels.Length; i++)
             {
-                Apa102.Pixels[i] = Color.FromArgb(brightness, 0, 0, 0);
+                Apa102!.Pixels[i] = Color.FromArgb(brightness, 0, 0, 0);
             }
 
             Apa102?.Flush();
@@ -153,7 +153,7 @@ namespace Hardware
         {
             for (var i = 0; i < Apa102?.Pixels.Length; i++)
             {
-                Apa102.Pixels[i] = Color.FromArgb(brightness, 255, 255, 255);
+                Apa102!.Pixels[i] = Color.FromArgb(brightness, 255, 255, 255);
             }
 
             Apa102?.Flush();
