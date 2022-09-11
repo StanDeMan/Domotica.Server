@@ -4,6 +4,8 @@
 		<RuntimeIdentifier>linux-arm</RuntimeIdentifier>
 		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+		<PlatformTarget>AnyCPU</PlatformTarget>
 	</PropertyGroup>
 
 	<ItemGroup>
