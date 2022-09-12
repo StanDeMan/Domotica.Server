@@ -6,6 +6,15 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ProduceReferenceAssembly>True</ProduceReferenceAssembly>
 		<PlatformTarget>AnyCPU</PlatformTarget>
+		<SelfContained>false</SelfContained>
+		<OutputType>Exe</OutputType>
+		<UserSecretsId>cc583baf-bcbd-42a1-be28-9fbf6840121b</UserSecretsId>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <Optimize>True</Optimize>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <Optimize>False</Optimize>
 	</PropertyGroup>
 
 	<ItemGroup>
