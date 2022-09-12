@@ -2,7 +2,7 @@
 
 namespace SignalClient;
 
-public class MainClient
+public static class MainClient
 {
     public static async Task ExecuteAsync()
     {
