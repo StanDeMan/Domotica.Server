@@ -2,9 +2,9 @@
 
 namespace Hardware
 {
-    public class Platform
+    public static class Platform
     {
-        public enum EnmOperatingSystem
+        private enum EnmOperatingSystem
         {
             Unknown,
             Windows,
@@ -14,9 +14,9 @@ namespace Hardware
 
         private const string GpioFile = "/dev/pigpio";
 
-        public static EnmOperatingSystem OperatingSystem { get; set; }
+        private static EnmOperatingSystem OperatingSystem { get; set; }
         public static string? DevicePath { get; set; }
-        public static string? Dns { get; set; }
+        private static string? Dns { get; set; }
 
         static Platform()
         {
