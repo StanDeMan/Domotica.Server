@@ -8,7 +8,7 @@ using Serilog;
 
 namespace Domotica.Server.Execute
 {
-    public sealed class Command
+    public static class Command
     {
         private static ImportAssembly _imported;
         private static readonly StreamWriter Writer;
