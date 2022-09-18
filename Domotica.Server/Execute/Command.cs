@@ -38,7 +38,7 @@ namespace Domotica.Server.Execute
                 ? RunExternal(parameter) 
                 : (bool) RunInternal(parameter);
 
-            Log.Debug($"Command.Execute: {ret}, {json}");
+            Log.Debug($"Command.Executed. Input: {json}. Output: {ret}");
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace Domotica.Server.Execute
         /// </summary>
         /// <param name="cmdParams">Dynamic deserialized from json</param>
         /// <returns>Imported Assembly object</returns>
-        private static ImportAssembly ImportAssembly(dynamic cmdParams) => new(
-            Convert.ToString(cmdParams.External.Assembly),
-            Convert.ToString(cmdParams.External.Class))
+        private static ImportAssembly ImportAssembly(dynamic cmdParams) => 
+            new(Convert.ToString(cmdParams.External.Assembly), 
+                Convert.ToString(cmdParams.External.Class))
         {
             Method =
             {
