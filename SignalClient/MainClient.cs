@@ -6,7 +6,7 @@ public static class MainClient
 {
     public static async Task ExecuteAsync()
     {
-        var uri = "https://localhost:7077/current-time";
+        const string uri = "https://localhost:7077/current-time";
 
         await using var connection = new HubConnectionBuilder().WithUrl(uri).Build();
 
