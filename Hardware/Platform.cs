@@ -1,29 +1,30 @@
 ﻿using SysNet = System.Net; 
 
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Hardware
 {
     public static class Platform
     {
-        private enum EnmOperatingSystem
+        public enum EnmOperatingSystem
         {
             Unknown,
             Windows,
-            Linux,
-            Mac
+            Linux
         }
 
         private const string GpioFile = "/dev/pigpio";
 
-        private static EnmOperatingSystem OperatingSystem { get; set; }
-        public static string? DevicePath { get; set; }
-        private static string? Dns { get; set; }
+        public static EnmOperatingSystem OperatingSystem { get; set; }
+        public static string? DevicePath { get; private set; }
+        public static string? Dns { get; set; }
 
         static Platform()
         {
             // If not running on pi set environment for windows platform
             OperatingSystem = Environment.OSVersion.Platform != PlatformID.Win32NT 
-                ? RunOnLinux() 
-                : RunOnWindows();
+                ? RunOnOperatingSystem(EnmOperatingSystem.Linux) 
+                : RunOnOperatingSystem(EnmOperatingSystem.Windows);
         }
 
         /// <summary>
@@ -37,6 +38,13 @@ namespace Hardware
             var currentPath = Path.GetFullPath(@"..\..\");  
             path = path?.TrimStart('/').Replace('/', '\\');
             DevicePath = Path.Combine(currentPath, path ?? "");
+        }
+
+        private static EnmOperatingSystem RunOnOperatingSystem(EnmOperatingSystem os)
+        {
+            return os ==  EnmOperatingSystem.Linux 
+                ? RunOnLinux() 
+                : RunOnWindows();
         }
 
         private static EnmOperatingSystem RunOnWindows()
