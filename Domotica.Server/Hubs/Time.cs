@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Domotica.Server.Hubs
 {
-    public sealed class TimeHub : Hub
+    public sealed class Time : Hub
     {
         public async IAsyncEnumerable<DateTime> Streaming([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
