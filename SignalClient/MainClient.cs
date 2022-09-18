@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
-namespace SignalClient;
+namespace SignalStreamingTimeClient;
 
 public static class MainClient
 {
