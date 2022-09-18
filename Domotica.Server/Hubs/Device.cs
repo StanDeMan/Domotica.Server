@@ -8,9 +8,9 @@ namespace Domotica.Server.Hubs
     {
         // Container for device status implemented on the device html page.
         // Every device knows what it is and how to deal with related data!
-        public static void SendCommand(string value)
+        public async Task SendCommand(string value)
         {
-            Command.Execute(value);
+            await Task.Run(() => Command.Execute(value));
         }
 
         public async Task DeviceStatusSend(string device, string group)
