@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>SwitchRange Control</title>
+
+        <link href="lib/metro-ui/css/metro-all.css" rel="stylesheet" />
+        <link href="css/site.css" rel="stylesheet" />
+
+        <script src="lib/signalr/signalr.min.js"></script>
+    </head>
+    <body class="bg-cyan">
+        <!-- With icon (font) -->
+        <div class="container bg-cyan fg-white">
+            <div class="row">
+                <div class="cell">
+                    <div class="heading">
+                        <span class="icon mif-switch mif-lg" id="switchStatusIcon"></span>
+                        <strong><span class="title" id="BrightnessInTitle">Device - Brightness: 0%</span></strong>
+                    </div>                
+                </div>
+                <div class="cell text-right">
+                    <input 
+                    id="MainSwitch"
+                    type="checkbox" 
+                    data-role="switch" 
+                    data-caption="On/Off" 
+                    data-cls-caption="fg-white text-bold" 
+                    data-caption-position="left"
+                    onclick="onMainSwitchClick(this)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <input diabled
+                    data-role="slider" 
+                    id="deviceBrightness"
+                    data-hint="true" 
+                    data-hint-always="false" 
+                    data-hint-position="top"
+                    data-show-min-max="true"
+                    data-cls-backside="bg-grayMouse"
+                    data-cls-marker="bg-yellow border-50 custom-marker"
+                    data-cls-hint="bg-green custom-marker shadow-2"
+                    data-cls-complete="bg-green"
+                    data-cls-min-max="bg-cyan fg-white p-2 mb-3-minus">
+                </div>
+            </div>
+        </div>
+
+        <!--Add script to update the page and send messages.-->
+        <script src="lib/metro-ui/js/metro.js"></script>
+        <script type="text/javascript">
+            var device = {
+                "DeviceId": "TIxnxU38dzkm",
+                "Name": "RGB Led Stripe",
+                "NameId": "RGBLedStripe",
+                "Params": {
+                    "Type": "LedStripe",
+                    "Command": "p 3 0 p 4 0 p 14 0",
+                    "LastValue": 100,
+                    "Brightness": 0
+                }
+            };
+           
+            // command: 3 channels RGB (without white)
+            const formatCmd = (valuePwm) => `p 3 ${valuePwm} p 4 ${valuePwm} p 14 ${valuePwm}`;
+
+            // device caption: device name and brightness (glow)
+            const formatCaption = (deviceName, glow) => `${deviceName} - Brightness: ${glow}%`;
+
+            // connect to SignalR hub
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7077/device", {
+                    skipNegotiation: true,
+                    transport: signalR.HttpTransportType.WebSockets
+                })
+                .build();
+
+            connection.start()
+                .then(() => connection
+                    .invoke("getDeviceStatusInitial", JSON.stringify(device), device.NameId)
+                    .catch(err => console.error(err.toString())));
+
+            connection.on('deviceStatusReceived', (status) => {
+                // The second is taking the actual device status
+                device = JSON.parse(status);
+                UpdateState(device);
+            });
+
+            connection.on('deviceStatusInitial', (status) => {
+                if (status) {
+                    // The first client reading the device status gets here inside
+                    device = JSON.parse(status);
+                    UpdateState(device);
+                }
+            });
+
+            UpdateState = function (device) {
+                SwitchState();
+
+                var glow = device.Params.Brightness === null || device.Params.Brightness === undefined 
+                    ? 0 
+                    : device.Params.Brightness;
+
+                $("#BrightnessInTitle").text(formatCaption(device.Name, glow));
+                $("#deviceBrightness").attr("data-value", glow);
+            };            
+            
+            SwitchState = function () {
+                $("#deviceBrightness").val() > 0
+                    ? $("#switchStatusIcon").css("color", "yellow")
+                    : $("#switchStatusIcon").css("color", "red");
+                   
+                $("#deviceBrightness").val() > 0
+                    ? document.getElementById("MainSwitch").checked = true
+                    : document.getElementById("MainSwitch").checked = false;
+            };   
+
+            function onMainSwitchClick(cb) { 
+                // save last brightness state
+                if(device.Params.Brightness > 0) 
+                    device.Params.LastValue = device.Params.Brightness;
+
+                device.Params.Brightness = cb.checked 
+                    ? device.Params.LastValue 
+                    : 0;
+
+                DeviceStatusSend(device);
+            }
+
+            UpdateColor = function (valuePwm) {
+                // the color value is ranging from 0 to 255
+                valuePwm = Math.round(valuePwm * 2.55);
+                device.Params.Command = formatCmd(valuePwm);
+            }
+
+            function DeviceStatusSend() {
+                if (device.Params.Brightness !== 0) {
+                    UpdateColor(device.Params.Brightness);
+                } else {
+                    UpdateColor(0);
+                }
+
+                connection.invoke("deviceStatusSend", JSON.stringify(device), device.NameId)
+                    .catch(err => console.error(err.toString()));
+
+                connection.invoke("sendCommand", JSON.stringify(device))
+                    .catch(err => console.error(err.toString()));
+
+                UpdateState(device);
+            }
+
+            $(document).ready(function () {
+                setInterval(SwitchState, 250);
+                $("#deviceBrightness").removeAttr('disabled');
+
+                $("#deviceBrightness").on("start stop move", function(){
+                    device.Params.Brightness = Math.round(this.value);                       
+                    DeviceStatusSend();
+                });
+            });
+
+            window.onbeforeunload = function () {
+                connection
+                    .invoke("setDeviceStatusFinal", device.NameId)
+                    .catch(err => console.error(err.toString()));
+            };
+        </script>
+    </body>
+</html>
+
