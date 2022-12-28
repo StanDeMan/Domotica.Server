@@ -3,7 +3,7 @@
   <PropertyGroup>
 	  <OutputType>Exe</OutputType>
 	  <!--<RuntimeIdentifier>linux-arm</RuntimeIdentifier>-->
-	  <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net7.0</TargetFramework>
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <PlatformTarget>AnyCPU</PlatformTarget>
 	  <Nullable>enable</Nullable>
