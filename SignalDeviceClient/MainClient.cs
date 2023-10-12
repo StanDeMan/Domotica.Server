@@ -46,7 +46,7 @@ public static class MainClient
 
     private static string ToggleDeviceParameter(string jsonDevice, int i)
     {
-        dynamic json = JsonConvert.DeserializeObject(jsonDevice);
+        dynamic json = JsonConvert.DeserializeObject(jsonDevice)!;
 
         json.Params.Command = i % 2 == 0
             ? "p 3 255 p 4 255 p 14 255"
