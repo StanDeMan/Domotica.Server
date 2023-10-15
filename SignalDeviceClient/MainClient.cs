@@ -52,8 +52,6 @@ public static class MainClient
             ? "p 3 255 p 4 255 p 14 255" 
             : "p 3 0 p 4 0 p 14 0";
 
-        jsonDevice = JsonConvert.SerializeObject(json);
-        
-        return jsonDevice;
+        return JsonConvert.SerializeObject(json);
     }
 }
