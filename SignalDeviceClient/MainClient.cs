@@ -30,16 +30,16 @@ public static class MainClient
             }
         };
 
-        var jsonDevice = JsonConvert.SerializeObject(device);
+        var jsonDeviceStatus = JsonConvert.SerializeObject(device);
 
-        await connection.InvokeAsync("GetDeviceStatusInitial", jsonDevice, device.NameId);
+        await connection.InvokeAsync("GetDeviceStatusInitial", jsonDeviceStatus, device.NameId);
 
         for (var i = 0; i < 60; i++)
         {
-            jsonDevice = ToggleDeviceParameter(jsonDevice, i);
+            jsonDeviceStatus = ToggleDeviceParameter(jsonDeviceStatus, i);
 
-            await connection.InvokeAsync("DeviceStatusSend", jsonDevice, device.NameId);
-            await connection.InvokeAsync("SendCommand", jsonDevice);
+            await connection.InvokeAsync("DeviceStatusSend", jsonDeviceStatus, device.NameId);
+            await connection.InvokeAsync("SendCommand", jsonDeviceStatus);
             await Task.Delay(1000);
         }
     }
