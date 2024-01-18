@@ -38,6 +38,7 @@ public static class MainClient
         {
             jsonDeviceStatus = ToggleDeviceParameter(jsonDeviceStatus, i);
 
+            WriteDeviceParamsToConsole(i, jsonDeviceStatus);
             await connection.InvokeAsync("DeviceStatusSend", jsonDeviceStatus, device.NameId);
             await connection.InvokeAsync("SendCommand", jsonDeviceStatus);
             await Task.Delay(1000);
@@ -48,10 +49,16 @@ public static class MainClient
     {
         dynamic json = JsonConvert.DeserializeObject(jsonDevice)!;
 
-        json.Params.Command = i%2 == 0 
-            ? "p 3 255 p 4 255 p 14 255" 
-            : "p 3 0 p 4 0 p 14 0";
+        json.Params.Brightness = i%2 == 0 
+            ? 100 
+            : 0;
 
         return JsonConvert.SerializeObject(json);
+    }
+
+    private static void WriteDeviceParamsToConsole(int i, string jsonDeviceStatus)
+    {
+        Console.WriteLine($"Count: {i:D4}");
+        Console.WriteLine($"{jsonDeviceStatus}");
     }
 }
