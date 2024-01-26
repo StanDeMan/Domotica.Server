@@ -147,9 +147,9 @@ namespace DataBase
         /// <summary>
         /// Read json
         /// </summary>
-        /// <param name="nameId">Search for NameId</param>
+        /// <param name="classId">Search for NameId</param>
         /// <returns>Json as dynamic</returns>
-        public async Task<dynamic?> ReadByNameIdAsync(string nameId)
+        public async Task<dynamic?> ReadByClassIdAsync(string classId)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace DataBase
                 
                 return await Task.Run(() => collection?
                     .AsQueryable()
-                    .FirstOrDefault(d => d.NameId == nameId));
+                    .FirstOrDefault(d => d.ClassId == classId));
             }
             catch (Exception e)
             {

@@ -56,9 +56,9 @@ namespace Hardware
                     return (true, value);
                 
                 // check if present in database
-                var device = await Store.ReadByNameIdAsync(key);
+                var device = await Store.ReadByClassIdAsync(key);
 
-                return ((bool, string))(device?.NameId == key 
+                return ((bool, string))(device?.ClassId == key 
                     ? (true, JsonConvert.SerializeObject(device)) 
                     : (false, string.Empty));
             }

@@ -20,7 +20,7 @@ public static class MainClient
         {
             DeviceId = "TIxnxU38dzkm",
             Name = "RGB Led Stripe",
-            NameId = "RGBLedStripe",
+            ClassId = "RGBLedStripe",
             Params = new
             {
                 Type = "LedStripe",
@@ -32,14 +32,14 @@ public static class MainClient
 
         var jsonDeviceStatus = JsonConvert.SerializeObject(device);
 
-        await connection.InvokeAsync("GetDeviceStatusInitial", jsonDeviceStatus, device.NameId);
+        await connection.InvokeAsync("GetDeviceStatusInitial", jsonDeviceStatus, device.ClassId);
 
         for (var i = 0; i < 60; i++)
         {
             jsonDeviceStatus = ToggleDeviceParameter(jsonDeviceStatus, i);
 
             WriteDeviceParamsToConsole(i, jsonDeviceStatus);
-            await connection.InvokeAsync("DeviceStatusSend", jsonDeviceStatus, device.NameId);
+            await connection.InvokeAsync("DeviceStatusSend", jsonDeviceStatus, device.ClassId);
             await connection.InvokeAsync("SendCommand", jsonDeviceStatus);
             await Task.Delay(1000);
         }

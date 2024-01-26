@@ -57,7 +57,7 @@
             var device = {
                 "DeviceId": "TIxnxU38dzkm",
                 "Name": "RGB Led Stripe",
-                "NameId": "RGBLedStripe",
+                "ClassId": "RGBLedStripe",
                 "Params": {
                     "Type": "LedStripe",
                     "Command": "p 3 0 p 4 0 p 14 0",
@@ -82,7 +82,7 @@
 
             connection.start()
                 .then(() => connection
-                    .invoke("getDeviceStatusInitial", JSON.stringify(device), device.NameId)
+                    .invoke("getDeviceStatusInitial", JSON.stringify(device), device.ClassId)
                     .catch(err => console.error(err.toString())));
 
             connection.on('deviceStatusReceived', (status) => {
@@ -145,7 +145,7 @@
                     UpdateColor(0);
                 }
 
-                connection.invoke("deviceStatusSend", JSON.stringify(device), device.NameId)
+                connection.invoke("deviceStatusSend", JSON.stringify(device), device.ClassId)
                     .catch(err => console.error(err.toString()));
 
                 connection.invoke("sendCommand", JSON.stringify(device))
@@ -166,7 +166,7 @@
 
             window.onbeforeunload = function () {
                 connection
-                    .invoke("setDeviceStatusFinal", device.NameId)
+                    .invoke("setDeviceStatusFinal", device.ClassId)
                     .catch(err => console.error(err.toString()));
             };
         </script>
