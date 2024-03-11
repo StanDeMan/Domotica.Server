@@ -19,7 +19,7 @@ namespace Domotica.Server.Execute
             var proc = Process(command);
             await proc.WaitForExitAsync(cts.Token);
 
-            return await proc.StandardOutput.ReadToEndAsync();
+            return await proc.StandardOutput.ReadToEndAsync(cts.Token);
         }
 
         private static Process Process(string command)
