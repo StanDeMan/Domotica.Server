@@ -10,10 +10,10 @@ namespace DataBase
         private const string CollectionName = "devices";
 
         public bool IsRunning { get; set; }
-       
-        public string? DataBaseName { get; } = DbName;
 
-        public DataStore? DataStore { get; }
+        private string? DataBaseName { get; } = DbName;
+
+        private DataStore? DataStore { get; }
 
         /// <summary>
         /// Flat Json file data store

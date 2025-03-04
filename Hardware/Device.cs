@@ -15,11 +15,11 @@ namespace Hardware
             None = 3
         }
 
-        public Apa102? Apa102;
-        
-        public bool IsRunning { get; set; }
-        public int Quantity { get; set; }
-        public Color Color { get; set; } = Color.White;
+        private Apa102? _apa102;
+
+        private bool IsRunning { get; set; }
+        private int Quantity { get; set; }
+        private Color Color { get; set; } = Color.White;
 
         /// <summary>
         /// Device constructor
@@ -85,8 +85,8 @@ namespace Hardware
                 : ledAmount;
 
             // instantiate Apa102 device
-            if(_spiDevice != null) Apa102 = new Apa102(_spiDevice, Quantity);   
-            if(Apa102 == null) return;
+            if(_spiDevice != null) _apa102 = new Apa102(_spiDevice, Quantity);   
+            if(_apa102 == null) return;
 
             // check if in bounds
             var alpha = a > 1
@@ -126,42 +126,42 @@ namespace Hardware
 
         private void Flush()
         {
-            Apa102?.Flush();
+            _apa102?.Flush();
         }
 
         private void Dim(int brightness)
         {
-            for (var i = 0; i < Apa102?.Pixels.Length; i++)
+            for (var i = 0; i < _apa102?.Pixels.Length; i++)
             {
-                Apa102!.Pixels[i] = Color.FromArgb(brightness, Color.R, Color.G, Color.B);
+                _apa102!.Pixels[i] = Color.FromArgb(brightness, Color.R, Color.G, Color.B);
             }
 
-            Apa102?.Flush();
+            _apa102?.Flush();
         }
 
         private void Off(int brightness = 0)
         {
-            for (var i = 0; i < Apa102?.Pixels.Length; i++)
+            for (var i = 0; i < _apa102?.Pixels.Length; i++)
             {
-                Apa102!.Pixels[i] = Color.FromArgb(brightness, 0, 0, 0);
+                _apa102!.Pixels[i] = Color.FromArgb(brightness, 0, 0, 0);
             }
 
-            Apa102?.Flush();
+            _apa102?.Flush();
         }
 
         private void On(int brightness = 255)
         {
-            for (var i = 0; i < Apa102?.Pixels.Length; i++)
+            for (var i = 0; i < _apa102?.Pixels.Length; i++)
             {
-                Apa102!.Pixels[i] = Color.FromArgb(brightness, 255, 255, 255);
+                _apa102!.Pixels[i] = Color.FromArgb(brightness, 255, 255, 255);
             }
 
-            Apa102?.Flush();
+            _apa102?.Flush();
         }
 
         public void Dispose()
         {
-            Apa102?.Dispose();
+            _apa102?.Dispose();
             _spiDevice?.Dispose();
         }
     }
