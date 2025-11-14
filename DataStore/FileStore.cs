@@ -9,8 +9,6 @@ namespace DataBase
         private const string DbName = "database";
         private const string CollectionName = "devices";
 
-        public bool IsRunning { get; set; }
-
         private string? DataBaseName { get; } = DbName;
 
         private DataStore? DataStore { get; }
@@ -35,14 +33,10 @@ namespace DataBase
                     .MinimumLevel.Warning()
                     .WriteTo.File(@$"logs\{DataBaseName}.log", rollingInterval: RollingInterval.Day)
                     .CreateLogger();
-
-                IsRunning = true;
             }
             catch (Exception e)
             {
                 Log.Error($"DataBase.File initializing: {e}");
-
-                IsRunning = false;
             }
         }
 
