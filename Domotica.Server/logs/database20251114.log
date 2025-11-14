@@ -1,0 +1,14 @@
+2025-11-14 19:35:14.900 +01:00 [ERR] DataBase.File.ReadByNameIdAsync: Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: 'System.Dynamic.ExpandoObject' does not contain a definition for 'ClassId'
+   at CallSite.Target(Closure, CallSite, Object)
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute1[T0,TRet](CallSite site, T0 arg0)
+   at DataBase.FileStore.<>c__DisplayClass17_0.<ReadByClassIdAsync>b__1(Object d) in E:\Sources\Privat\Domotica.Server\DataStore\FileStore.cs:line 160
+   at System.Linq.Enumerable.TryGetFirst[TSource](IEnumerable`1 source, Func`2 predicate, Boolean& found)
+   at System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   at DataBase.FileStore.<>c__DisplayClass17_1.<ReadByClassIdAsync>b__0() in E:\Sources\Privat\Domotica.Server\DataStore\FileStore.cs:line 158
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at DataBase.FileStore.ReadByClassIdAsync(String classId) in E:\Sources\Privat\Domotica.Server\DataStore\FileStore.cs:line 158
